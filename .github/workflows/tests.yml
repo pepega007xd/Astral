@@ -15,6 +15,7 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v2
     
+      # based on https://github.com/ocaml/setup-ocaml
       - name: Set-up OCaml
         uses: ocaml/setup-ocaml@v2
         with:
