@@ -36,21 +36,20 @@ module Make () = struct
     !counter
 
   let mk name =
-    let tag = 
-      try HT.find_tag !hash_table name
-      with Not_found -> next_id ()
+    let tag, index = 
+      try HT.find !hash_table name
+      with Not_found -> next_id (), 0
     in
-    HT.add !hash_table name (tag, 0);
+    HT.add !hash_table name (tag, index);
     (tag, name)
 
   let mk_fresh name =
-    let tag = next_id () in
-    let index =
-      try HT.find_index !hash_table name
-      with Not_found -> 0
+    let tag, index =
+      try HT.find !hash_table name
+      with Not_found -> next_id (), 0
     in
     HT.add !hash_table name (tag, index + 1);
-    (tag, Format.asprintf "%s!%d" name index)
+    (next_id (), Format.asprintf "%s!%d" name index)
 
   let show = show
   let compare = compare
